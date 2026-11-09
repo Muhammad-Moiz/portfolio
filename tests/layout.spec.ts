@@ -39,6 +39,23 @@ test("intro actions are links of at least 44px", async ({ page }) => {
   }
 });
 
+test("text columns stay within 74 characters", async ({ page }) => {
+  await page.goto("/");
+  const tooWide = await page.evaluate(() =>
+    [...document.querySelectorAll(".col, .row > :last-child")]
+      .filter((el) => {
+        const probe = document.createElement("span");
+        probe.style.cssText = "position: absolute; width: 74ch";
+        el.append(probe);
+        const limit = probe.getBoundingClientRect().width;
+        probe.remove();
+        return el.getBoundingClientRect().width > limit + 0.5;
+      })
+      .map((el) => el.textContent?.slice(0, 40)),
+  );
+  expect(tooWide).toEqual([]);
+});
+
 test("CV links download the PDF under a readable name", async ({ page }) => {
   await page.goto("/");
   const links = page.getByRole("link", { name: "Download CV (PDF)" });

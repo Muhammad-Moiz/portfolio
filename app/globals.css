@@ -539,7 +539,7 @@ figcaption {
 
 @media (min-width: 48rem) {
   .row {
-    grid-template-columns: 210px 1fr;
+    grid-template-columns: 210px minmax(0, 74ch);
   }
 }
 
