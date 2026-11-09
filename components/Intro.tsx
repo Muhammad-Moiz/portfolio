@@ -1,4 +1,5 @@
 import { profile } from "@/lib/content";
+import { ActionList } from "./ActionList";
 import { Prompt } from "./Prompt";
 
 export function Intro() {
@@ -14,19 +15,7 @@ export function Intro() {
       <div className="col">
         <p className="role">{profile.role}</p>
         <p>{profile.summary}</p>
-        <ul className="actions">
-          {profile.actions.map(({ label, href, accessibleName }, i) => (
-            <li key={href}>
-              <a
-                className={i === 0 ? "action action-primary" : "action"}
-                href={href}
-                aria-label={accessibleName}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <ActionList actions={profile.actions} />
         <ul className="facts">
           {profile.facts.map((fact) => (
             <li key={fact}>{fact}</li>

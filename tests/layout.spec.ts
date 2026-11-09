@@ -32,7 +32,7 @@ test("intro actions are links of at least 44px", async ({ page }) => {
     { name: "GitHub", href: "https://github.com/Muhammad-Moiz" },
   ];
   for (const { name, href } of actions) {
-    const link = page.getByRole("main").getByRole("link", { name });
+    const link = page.locator(".intro").getByRole("link", { name });
     await expect(link).toHaveAttribute("href", href);
     const box = await link.boundingBox();
     expect(box?.height).toBeGreaterThanOrEqual(44);

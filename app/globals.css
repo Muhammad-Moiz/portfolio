@@ -277,11 +277,11 @@ main:focus {
   font-size: 15px;
 }
 
-#work {
+.section {
   margin-top: 56px;
 }
 
-#work h2 {
+main h2 {
   margin-bottom: 16px;
   font-size: 22px;
   font-weight: 700;
@@ -495,4 +495,92 @@ figcaption {
 .box h3 {
   font-size: 19px;
   font-weight: 700;
+}
+
+.rows {
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px 24px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 40rem) {
+  .row {
+    grid-template-columns: 210px 1fr;
+  }
+}
+
+.when,
+.muted {
+  color: var(--mut);
+}
+
+.row-title b {
+  font-size: 18px;
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px 30px;
+}
+
+@media (min-width: 700px) {
+  .skills {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.skills div {
+  padding-block: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.skills dt {
+  color: var(--acc);
+  font-weight: 700;
+}
+
+.contact {
+  padding: 26px 28px;
+  border: 2px solid var(--acc);
+}
+
+.closing {
+  margin-top: 30px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 11px;
+  height: 20px;
+  margin-left: 6px;
+  background: var(--acc);
+  vertical-align: -3px;
+}
+
+.site-footer {
+  margin-top: 56px;
+  border-top: 1px solid var(--line);
+  color: var(--mut);
+  font-size: 14px;
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding-block: 26px 30px;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
