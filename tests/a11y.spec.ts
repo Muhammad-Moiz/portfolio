@@ -62,23 +62,34 @@ test("no animation or transition anywhere", async ({ page }) => {
   expect(moving).toBe(0);
 });
 
-test("text spacing override does not clip", async ({ page }) => {
-  await page.goto("/");
-  await page.addStyleTag({
-    content: `* {
-      line-height: 1.5 !important;
-      letter-spacing: 0.12em !important;
-      word-spacing: 0.16em !important;
-    }
-    p { margin-bottom: 2em !important; }`,
+for (const width of [320, 1280]) {
+  test(`text spacing override does not clip or overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    await page.addStyleTag({
+      content: `* {
+        line-height: 1.5 !important;
+        letter-spacing: 0.12em !important;
+        word-spacing: 0.16em !important;
+      }
+      p { margin-bottom: 2em !important; }`,
+    });
+    const result = await page.evaluate(() => {
+      const root = document.documentElement;
+      return {
+        clipped: [...document.querySelectorAll("p, li, td, a, button")]
+          .filter((el) => el.scrollHeight > el.clientHeight + 1)
+          .map((el) => el.textContent?.slice(0, 40)),
+        overflow: root.scrollWidth - root.clientWidth,
+        headerHeight: document.querySelector(".site-header")!.getBoundingClientRect().height,
+        scrollPadding: parseFloat(getComputedStyle(root).scrollPaddingTop),
+      };
+    });
+    expect(result.clipped).toEqual([]);
+    expect(result.overflow).toBeLessThanOrEqual(0);
+    expect(result.headerHeight).toBeLessThanOrEqual(result.scrollPadding);
   });
-  const clipped = await page.evaluate(() =>
-    [...document.querySelectorAll("p, li, td, a, button")]
-      .filter((el) => el.scrollHeight > el.clientHeight + 1)
-      .map((el) => el.textContent?.slice(0, 40)),
-  );
-  expect(clipped).toEqual([]);
-});
+}
 
 for (const width of [320, 640, 768, 960, 1280]) {
   test(`reflows at ${width}px with the header fully on screen`, async ({ page }) => {

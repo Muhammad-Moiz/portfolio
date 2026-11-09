@@ -185,7 +185,8 @@ main:focus {
 
 .site-header ul {
   display: flex;
-  gap: 0 14px;
+  flex-wrap: wrap;
+  gap: 4px 14px;
 }
 
 .site-header nav a {
@@ -210,7 +211,7 @@ main:focus {
   }
 
   .site-header ul {
-    gap: 0 22px;
+    column-gap: 22px;
   }
 }
 
