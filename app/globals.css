@@ -1,1 +1,99 @@
 @import "tailwindcss";
+
+:root {
+  --bg: #12100b;
+  --fg: #f3ebdd;
+  --acc: #ffb000;
+  --mut: #c9bc9f;
+  --line: #3a3222;
+  --panel: #1a170f;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #fbf7ee;
+    --fg: #1c1810;
+    --acc: #664000;
+    --mut: #5a5040;
+    --line: #e3d9c5;
+    --panel: #f4eee1;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: #fbf7ee;
+  --fg: #1c1810;
+  --acc: #664000;
+  --mut: #5a5040;
+  --line: #e3d9c5;
+  --panel: #f4eee1;
+}
+
+html {
+  scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono), monospace;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.display {
+  font-family: var(--font-display), monospace;
+}
+
+:focus-visible {
+  outline: 3px solid var(--fg);
+  outline-offset: 3px;
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+.theme-toggle {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.theme-toggle .to-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .theme-toggle .to-light {
+    display: none;
+  }
+  :root:not([data-theme="dark"]) .theme-toggle .to-dark {
+    display: inline;
+  }
+}
+
+:root[data-theme="light"] .theme-toggle .to-light {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .to-dark {
+  display: inline;
+}
