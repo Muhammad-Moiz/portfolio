@@ -1,6 +1,7 @@
 @import "tailwindcss/preflight.css" layer(base);
 
 :root {
+  color-scheme: dark;
   --bg: #12100b;
   --fg: #f3ebdd;
   --acc: #ffb000;
@@ -11,6 +12,7 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
+    color-scheme: light;
     --bg: #fbf7ee;
     --fg: #1c1810;
     --acc: #664000;
@@ -21,6 +23,7 @@
 }
 
 :root[data-theme="light"] {
+  color-scheme: light;
   --bg: #fbf7ee;
   --fg: #1c1810;
   --acc: #664000;

@@ -5,17 +5,21 @@ const LIGHT_BG = "rgb(251, 247, 238)";
 
 const bg = (page: Page) =>
   page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+const colorScheme = (page: Page) =>
+  page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);
 
 test("dark by default when OS prefers dark", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");
   expect(await bg(page)).toBe(DARK_BG);
+  expect(await colorScheme(page)).toBe("dark");
 });
 
 test("light when OS prefers light", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
   expect(await bg(page)).toBe(LIGHT_BG);
+  expect(await colorScheme(page)).toBe("light");
 });
 
 test("toggle works from the keyboard, persists and relabels", async ({ page }) => {
@@ -24,6 +28,7 @@ test("toggle works from the keyboard, persists and relabels", async ({ page }) =
   await page.getByRole("button", { name: "Switch to light mode" }).focus();
   await page.keyboard.press("Enter");
   expect(await bg(page)).toBe(LIGHT_BG);
+  expect(await colorScheme(page)).toBe("light");
   await expect(page.getByRole("button", { name: "Switch to dark mode" })).toBeFocused();
   await page.reload();
   expect(await bg(page)).toBe(LIGHT_BG);
