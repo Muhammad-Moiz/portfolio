@@ -30,12 +30,10 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
-  jobTitle: "Frontend Engineer",
+  jobTitle: profile.jobTitle,
   url: site.url,
-  sameAs: profile.actions
-    .filter(({ label }) => label === "LinkedIn" || label === "GitHub")
-    .map(({ href }) => href),
-  alumniOf: { "@type": "CollegeOrUniversity", name: "FAST-NUCES" },
+  sameAs: [profile.linkedIn, profile.gitHub],
+  alumniOf: { "@type": "CollegeOrUniversity", name: profile.university },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

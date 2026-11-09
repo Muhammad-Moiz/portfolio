@@ -43,6 +43,8 @@ export const site = {
 export const profile = {
   name: "Muhammad Moiz",
   role: "Frontend Engineer · React · TypeScript",
+  jobTitle: "Frontend Engineer",
+  university: "FAST-NUCES",
   summary:
     "6+ years building fintech, payroll and AI products for teams in the US, UK and Middle East. Principal Software Engineer at Techlogix, with an MS in Data Science. Open to roles in the UK, UAE and Europe.",
   facts: [
@@ -51,16 +53,19 @@ export const profile = {
     "100+ UI components shipped",
     "US · UK · Middle East clients",
   ],
-  location: "Based in Karachi, Pakistan.",
-  relocation: "Open to relocating to the UK, UAE, Portugal or Spain.",
   email: "muhammadmoiz2221@gmail.com",
-  actions: [
-    { label: "Download CV", accessibleName: "Download CV (PDF)", href: "/cv.pdf" },
-    { label: "Email", href: "mailto:muhammadmoiz2221@gmail.com" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammad-moiz-516a0113a" },
-    { label: "GitHub", href: "https://github.com/Muhammad-Moiz" },
-  ] satisfies Link[],
+  linkedIn: "https://www.linkedin.com/in/muhammad-moiz-516a0113a",
+  gitHub: "https://github.com/Muhammad-Moiz",
 };
+
+const cv: Link = { label: "Download CV", accessibleName: "Download CV (PDF)", href: "/cv.pdf" };
+const mailto = `mailto:${profile.email}`;
+const socialLinks: Link[] = [
+  { label: "LinkedIn", href: profile.linkedIn },
+  { label: "GitHub", href: profile.gitHub },
+];
+
+export const introActions: Link[] = [cv, { label: "Email", href: mailto }, ...socialLinks];
 
 export const nav: Link[] = [
   { label: "Work", href: "#work" },
@@ -297,8 +302,8 @@ export const skills: SkillGroup[] = [
 ];
 
 export const education: Entry[] = [
-  { when: "2023–2025", title: "MS Data Science", detail: "FAST-NUCES · CGPA 3.23/4.00" },
-  { when: "2016–2020", title: "BS Computer Science", detail: "FAST-NUCES" },
+  { when: "2023–2025", title: "MS Data Science", detail: `${profile.university} · CGPA 3.23/4.00` },
+  { when: "2016–2020", title: "BS Computer Science", detail: profile.university },
   {
     when: "Recognition",
     title: "3× Achiever of the Month (AOTM)",
@@ -306,3 +311,14 @@ export const education: Entry[] = [
   },
   { when: "Course", title: "Advanced React Component Patterns", detail: "Udemy" },
 ];
+
+export const contact = {
+  location: "Based in Karachi, Pakistan.",
+  relocation: "Open to relocating to the UK, UAE, Portugal or Spain.",
+  actions: [{ label: "Email me", href: mailto }, cv, ...socialLinks],
+};
+
+export const footer = {
+  notes: [`© 2026 ${profile.name}`, "Built with Next.js · tested against WCAG 2.2 AA"],
+  source: { label: "Source on GitHub", href: site.repo },
+};

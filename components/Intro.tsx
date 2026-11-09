@@ -1,4 +1,4 @@
-import { profile } from "@/lib/content";
+import { introActions, profile } from "@/lib/content";
 import { ActionList } from "./ActionList";
 import { Prompt } from "./Prompt";
 
@@ -15,7 +15,7 @@ export function Intro() {
       <div className="col">
         <p className="role">{profile.role}</p>
         <p>{profile.summary}</p>
-        <ActionList actions={profile.actions} />
+        <ActionList actions={introActions} />
         <ul className="facts">
           {profile.facts.map((fact) => (
             <li key={fact}>{fact}</li>

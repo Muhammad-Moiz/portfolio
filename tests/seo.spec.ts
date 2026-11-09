@@ -18,7 +18,12 @@ test("Person JSON-LD", async ({ page }) => {
   const raw = await page.locator('script[type="application/ld+json"]').textContent();
   const data = JSON.parse(raw ?? "");
   expect(data["@type"]).toBe("Person");
-  expect(data.sameAs).toHaveLength(2);
+  expect(data.jobTitle).toBe("Frontend Engineer");
+  expect(data.alumniOf.name).toBe("FAST-NUCES");
+  expect(data.sameAs).toEqual([
+    "https://www.linkedin.com/in/muhammad-moiz-516a0113a",
+    "https://github.com/Muhammad-Moiz",
+  ]);
 });
 
 test("sitemap, robots, icon and OG image respond", async ({ request }) => {
