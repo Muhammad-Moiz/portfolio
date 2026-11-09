@@ -25,7 +25,7 @@ export default function Home() {
           <SectionHeading id="work-title" command="DIR">
             Projects
           </SectionHeading>
-          <ProjectsTable projects={projects} />
+          <ProjectsTable projects={projects} smallProjects={smallProjects} />
           {projects.map((project) => (
             <ProjectArticle key={project.id} project={project} />
           ))}

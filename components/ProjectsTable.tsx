@@ -1,16 +1,12 @@
-import type { Project } from "@/lib/content";
+import type { Project, SmallProject } from "@/lib/content";
 
-type Props = { projects: Project[] };
+type Props = { projects: Project[]; smallProjects: SmallProject[] };
 
-const smallProjectRow = {
-  id: "property-ways",
-  code: "PROPWAYS",
-  role: "Backend",
-  about: "Property platform REST API",
-};
-
-export function ProjectsTable({ projects }: Props) {
-  const rows = [...projects, smallProjectRow];
+export function ProjectsTable({ projects, smallProjects }: Props) {
+  const rows = [
+    ...projects,
+    ...smallProjects.flatMap(({ id, row }) => (row ? [{ id, ...row }] : [])),
+  ];
 
   return (
     <>

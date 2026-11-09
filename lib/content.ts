@@ -14,7 +14,14 @@ export type Project = {
   figures: Figure[];
   illustration?: boolean;
 };
-export type SmallProject = { title: string; meta: string; body: string; stack: string[] };
+export type SmallProject = {
+  id: string;
+  title: string;
+  meta: string;
+  body: string;
+  stack: string[];
+  row?: Pick<Project, "code" | "role" | "about">;
+};
 export type Job = {
   company: string;
   location: string;
@@ -194,12 +201,15 @@ export const projects: Project[] = [
 
 export const smallProjects: SmallProject[] = [
   {
+    id: "property-ways",
     title: "Property Ways",
     meta: "Property platform · Backend",
     body: "REST API for listings and user accounts, with JWT and Passport sign-in and email through SendGrid.",
     stack: ["Node.js", "Express", "PostgreSQL", "Sequelize"],
+    row: { code: "PROPWAYS", role: "Backend", about: "Property platform REST API" },
   },
   {
+    id: "earlier-work",
     title: "Earlier client work",
     meta: "Full stack",
     body: "Responsive web apps built with Vue.js and Node.js, including a Square payment gateway integration for a live ticketing product.",
