@@ -138,7 +138,7 @@ export const projects: Project[] = [
         src: "/work/atlas-ui-kit.jpg",
         width: 1600,
         height: 1000,
-        alt: "Components from the Atlas UI kit: a top navigation bar, an employee payroll table with countries and currencies, a payroll calendar, a task list, a time tracker and a payroll progress stepper.",
+        alt: "Components from the Atlas UI kit: a top navigation bar, an employee payroll table with countries and currencies, a pie chart, a payroll calendar, a task list, a cash requirement summary, a payroll progress stepper, a leave balance card and an add-country widget.",
         caption: "Components from the Atlas UI kit, rendered from its Storybook.",
       },
     ],

@@ -19,6 +19,13 @@ test("no client name or BS CGPA leaks into the site or repo", async ({ request }
   expect(leaks).toEqual([]);
 });
 
+test("published photos carry no EXIF metadata", () => {
+  const photos = trackedFiles.filter((file) => /\.jpe?g$/i.test(file));
+  expect(photos.length).toBeGreaterThan(0);
+  const withExif = photos.filter((file) => readFileSync(file).includes("Exif\0\0"));
+  expect(withExif).toEqual([]);
+});
+
 test("CV download is a PDF", async ({ request }) => {
   const response = await request.get("/cv.pdf");
   expect(response.status()).toBe(200);
