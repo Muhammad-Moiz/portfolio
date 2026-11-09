@@ -70,7 +70,7 @@ a {
 .theme-toggle {
   min-height: 44px;
   padding: 0 1rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--mut);
   background: var(--panel);
   color: var(--fg);
   font: inherit;

@@ -59,3 +59,17 @@ test("theme follows OS with JavaScript disabled", async ({ browser }) => {
   expect(await bg(page)).toBe(LIGHT_BG);
   await context.close();
 });
+
+for (const [scheme, border] of [
+  ["dark", "rgb(201, 188, 159)"],
+  ["light", "rgb(90, 80, 64)"],
+] as const) {
+  test(`toggle border meets non-text contrast in ${scheme} mode`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: scheme });
+    await page.goto("/");
+    const color = await page
+      .locator(".theme-toggle")
+      .evaluate((el) => getComputedStyle(el).borderTopColor);
+    expect(color).toBe(border);
+  });
+}
