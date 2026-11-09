@@ -5,17 +5,17 @@ import { expect, test } from "@playwright/test";
 const forbidden = /al[\s-]?fardan|\bafe?x\b|\b2\.97\b/i;
 const binary = /\.(jpe?g|png|webp|gif|ico|pdf|woff2?)$/i;
 
-function trackedTextFiles() {
-  return execFileSync("git", ["ls-files"], { encoding: "utf8" })
-    .split("\n")
-    .filter((file) => file && !binary.test(file) && file !== "package-lock.json");
-}
+const trackedFiles = execFileSync("git", ["ls-files"], { encoding: "utf8" }).split("\n").filter(Boolean);
 
 test("no client name or BS CGPA leaks into the site or repo", async ({ request }) => {
   const html = await (await request.get("/")).text();
   expect(html).not.toMatch(forbidden);
 
-  const leaks = trackedTextFiles().filter((file) => forbidden.test(readFileSync(file, "utf8")));
+  expect(trackedFiles.filter((file) => forbidden.test(file))).toEqual([]);
+
+  const leaks = trackedFiles
+    .filter((file) => !binary.test(file) && file !== "package-lock.json")
+    .filter((file) => forbidden.test(readFileSync(file, "utf8")));
   expect(leaks).toEqual([]);
 });
 
