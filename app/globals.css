@@ -297,18 +297,22 @@ main h2 {
 
 table {
   width: 100%;
-  min-width: 36rem;
-  table-layout: fixed;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: 15px;
 }
 
-th:nth-child(-n + 2) {
-  width: 9rem;
+@media (min-width: 48rem) {
+  table {
+    table-layout: fixed;
+  }
+
+  th:nth-child(-n + 2) {
+    width: 9rem;
+  }
 }
 
 th {
-  padding: 6px 14px 8px 0;
+  padding: 6px 8px 8px 0;
   border-bottom: 1px solid var(--line);
   color: var(--mut);
   font-weight: 600;
@@ -316,9 +320,20 @@ th {
 }
 
 td {
-  padding: 0 14px 0 0;
+  padding: 0 8px 0 0;
   border-bottom: 1px solid var(--line);
   vertical-align: top;
+}
+
+@media (min-width: 40rem) {
+  table {
+    font-size: 16px;
+  }
+
+  th,
+  td {
+    padding-right: 14px;
+  }
 }
 
 td:not(:first-child) {

@@ -8,7 +8,7 @@ All of the copy lives in one file, `lib/content.ts`.
 
 - Next.js 15 (App Router) and React 19
 - TypeScript
-- Tailwind CSS v4
+- Tailwind CSS v4 preflight for the base reset; hand-written CSS with custom properties
 - IBM Plex Mono and VT323, self-hosted
 - Playwright and axe-core for tests
 

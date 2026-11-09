@@ -76,3 +76,23 @@ test("no horizontal scroll at 320px", async ({ page }) => {
   );
   expect(overflow).toBeLessThanOrEqual(0);
 });
+
+for (const width of [320, 390]) {
+  test(`projects table needs no sideways scroll at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    const wrapper = page.getByRole("region", { name: "Projects table" });
+    const { scrollWidth, clientWidth } = await wrapper.evaluate((el) => ({
+      scrollWidth: el.scrollWidth,
+      clientWidth: el.clientWidth,
+    }));
+    expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
+
+    const wrapperRight = (await wrapper.boundingBox())!.x + clientWidth;
+    const cells = wrapper.locator("td:last-child");
+    for (let i = 0; i < (await cells.count()); i++) {
+      const box = (await cells.nth(i).boundingBox())!;
+      expect(box.x + box.width).toBeLessThanOrEqual(wrapperRight + 0.5);
+    }
+  });
+}
