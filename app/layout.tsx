@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.title,
   description: site.description,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: profile.name,
@@ -42,11 +43,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        {/* metadata.alternates drops the root's trailing slash, which would not match the sitemap-listed canonical form */}
-        <link rel="canonical" href={`${site.url}/`} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\u003c") }}
         />
       </head>
       <body>{children}</body>

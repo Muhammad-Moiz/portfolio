@@ -4,7 +4,7 @@ import { site } from "../lib/content";
 test("meta description, canonical and Open Graph", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", site.description);
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `${site.url}/`);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", site.url);
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", site.title);
   await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
