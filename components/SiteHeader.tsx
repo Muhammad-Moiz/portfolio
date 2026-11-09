@@ -3,7 +3,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader() {
   return (
-    <header className="site-header">
+    <header id="top" className="site-header">
       <div className="wrap site-header-inner">
         <a className="logo" href="#top">
           MOIZ.DOS

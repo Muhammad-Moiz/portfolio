@@ -237,7 +237,7 @@ export const experience: Job[] = [
 
 export const skills: SkillGroup[] = [
   {
-    name: "Frontend",
+    name: "FRONTEND",
     items: [
       "React",
       "TypeScript",
@@ -254,22 +254,22 @@ export const skills: SkillGroup[] = [
       "ShadCN UI",
     ],
   },
-  { name: "Testing", items: ["Jest", "React Testing Library", "Cypress", "Playwright", "TDD"] },
+  { name: "TESTING", items: ["Jest", "React Testing Library", "Cypress", "Playwright", "TDD"] },
   {
-    name: "Design & delivery",
+    name: "DESIGN & DELIVERY",
     items: [
       "Figma",
-      "Wireframes and mockups",
-      "Prototyping",
-      "Design systems",
-      "Visual guidelines",
+      "wireframes and mockups",
+      "prototyping",
+      "design systems",
+      "visual guidelines",
       "Agile",
       "Jira",
       "Confluence",
     ],
   },
   {
-    name: "Backend & tools",
+    name: "BACKEND & TOOLS",
     items: [
       "Node.js",
       "NestJS",
