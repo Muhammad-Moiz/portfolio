@@ -78,11 +78,12 @@ test("works when storage is blocked", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("theme follows OS with JavaScript disabled", async ({ browser }) => {
+test("theme follows OS and the toggle is hidden with JavaScript disabled", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, colorScheme: "light" });
   const page = await context.newPage();
   await page.goto("/");
   expect(await bg(page)).toBe(LIGHT_BG);
+  await expect(page.locator(".theme-toggle")).toBeHidden();
   await context.close();
 });
 

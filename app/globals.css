@@ -107,6 +107,12 @@ a {
   display: inline;
 }
 
+@media (scripting: none) {
+  .theme-toggle {
+    display: none;
+  }
+}
+
 .wrap {
   max-width: 1180px;
   margin-inline: auto;
