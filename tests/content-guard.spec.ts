@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
-const forbidden = /al\s?fardan|\bafe?x\b|\b2\.97\b/i;
+const forbidden = /al[\s-]?fardan|\bafe?x\b|\b2\.97\b/i;
 const binary = /\.(jpe?g|png|webp|gif|ico|pdf|woff2?)$/i;
 
 function trackedTextFiles() {
