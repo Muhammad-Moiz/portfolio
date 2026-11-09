@@ -39,6 +39,29 @@ test("intro actions are links of at least 44px", async ({ page }) => {
   }
 });
 
+for (const width of [1280, 390]) {
+  test(`logo link returns to the top at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    const logo = page.getByRole("link", { name: "MOIZ.DOS" });
+    const scrollY = () => page.evaluate(() => window.scrollY);
+    const scrollToBottom = async () => {
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      expect(await scrollY()).toBeGreaterThan(1000);
+    };
+
+    await scrollToBottom();
+    await logo.click();
+    await expect.poll(scrollY).toBeLessThanOrEqual(1);
+
+    await scrollToBottom();
+    await logo.focus();
+    await page.keyboard.press("Enter");
+    await expect.poll(scrollY).toBeLessThanOrEqual(1);
+  });
+}
+
 for (const width of [1280, 320]) {
   test(`nav jumps keep the heading below the sticky header at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 800 });
