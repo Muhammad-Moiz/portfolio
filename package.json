@@ -25,8 +25,13 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "eslint": "^9.39.5",
-    "eslint-config-next": "15.5.23",
+    "eslint-config-next": "15.5.29",
     "tailwindcss": "^4.1.12",
     "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "^8.5.26"
+    }
   }
 }
