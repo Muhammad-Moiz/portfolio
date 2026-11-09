@@ -120,11 +120,14 @@ for (const width of [320, 640, 768, 960, 1280]) {
   });
 }
 
-test("all text meets 7:1 contrast", async ({ page }) => {
-  await page.goto("/");
-  const results = await new AxeBuilder({ page })
-    .withTags(["wcag2aaa"])
-    .withRules(["color-contrast-enhanced"])
-    .analyze();
-  expect(results.violations).toEqual([]);
-});
+for (const scheme of ["dark", "light"] as const) {
+  test(`all text meets 7:1 contrast in ${scheme} mode`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: scheme });
+    await page.goto("/");
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2aaa"])
+      .withRules(["color-contrast-enhanced"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+}
