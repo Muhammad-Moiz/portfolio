@@ -16,14 +16,29 @@ test("every interactive element is reachable by Tab with a visible focus ring", 
   await page.goto("/");
   const total = await page.locator("a[href], button, [tabindex='0']").count();
   expect(total).toBeGreaterThan(0);
+  let previous: string | null = null;
   for (let i = 0; i < total; i++) {
     await page.keyboard.press("Tab");
-    const ring = await page.evaluate(() => {
-      const style = getComputedStyle(document.activeElement as Element);
-      return { style: style.outlineStyle, width: parseFloat(style.outlineWidth) };
+    const focused = await page.evaluate(() => {
+      const el = document.activeElement as HTMLElement;
+      const style = getComputedStyle(el);
+      const header = document.querySelector(".site-header")!;
+      return {
+        id: `${el.tagName}:${el.textContent}:${el.getAttribute("href")}:${el.getAttribute("aria-label")}`,
+        outlineStyle: style.outlineStyle,
+        outlineWidth: parseFloat(style.outlineWidth),
+        coversHeader: header.contains(el) || el.classList.contains("skip-link"),
+        top: el.getBoundingClientRect().top,
+        headerBottom: header.getBoundingClientRect().bottom,
+      };
     });
-    expect(ring.style).not.toBe("none");
-    expect(ring.width).toBeGreaterThanOrEqual(3);
+    expect(focused.id, `Tab press ${i + 1} moved focus`).not.toBe(previous);
+    previous = focused.id;
+    expect(focused.outlineStyle).not.toBe("none");
+    expect(focused.outlineWidth).toBeGreaterThanOrEqual(3);
+    if (!focused.coversHeader) {
+      expect(focused.top, focused.id).toBeGreaterThanOrEqual(focused.headerBottom);
+    }
   }
 });
 
@@ -65,22 +80,34 @@ test("text spacing override does not clip", async ({ page }) => {
   expect(clipped).toEqual([]);
 });
 
-test("reflows at 320px and at 200% zoom", async ({ page }) => {
-  for (const [width, zoom] of [
-    [320, 1],
-    [640, 2],
-  ]) {
+for (const width of [320, 640, 768, 960, 1280]) {
+  test(`reflows at ${width}px with the header fully on screen`, async ({ page }) => {
     await page.setViewportSize({ width, height: 800 });
     await page.goto("/");
-    await page.evaluate((z) => {
-      document.documentElement.style.zoom = String(z);
-    }, zoom);
-    const overflow = await page.evaluate(
-      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    );
-    expect(overflow, `${width}px at zoom ${zoom}`).toBeLessThanOrEqual(0);
-  }
-});
+    const result = await page.evaluate(() => {
+      const root = document.documentElement;
+      const header = document.querySelector(".site-header")!.getBoundingClientRect();
+      const controls = [...document.querySelectorAll(".site-header nav a, .site-header .theme-toggle")];
+      return {
+        overflow: root.scrollWidth - root.clientWidth,
+        outside: controls
+          .map((el) => ({ name: el.textContent?.trim(), box: el.getBoundingClientRect() }))
+          .filter(
+            ({ box }) =>
+              box.left < 0 ||
+              box.right > window.innerWidth ||
+              box.top < header.top ||
+              box.bottom > header.bottom,
+          )
+          .map(({ name }) => name),
+        count: controls.length,
+      };
+    });
+    expect(result.count).toBeGreaterThan(1);
+    expect(result.overflow).toBeLessThanOrEqual(0);
+    expect(result.outside).toEqual([]);
+  });
+}
 
 test("all text meets 7:1 contrast", async ({ page }) => {
   await page.goto("/");
