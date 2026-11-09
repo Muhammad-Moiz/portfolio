@@ -33,7 +33,7 @@ html {
   scroll-padding-top: 10rem;
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 48rem) {
   html {
     scroll-padding-top: 6rem;
   }
@@ -120,6 +120,10 @@ a {
   max-width: 74ch;
 }
 
+.col > * + * {
+  margin-top: 16px;
+}
+
 main:focus {
   outline: none;
 }
@@ -194,7 +198,7 @@ main:focus {
   grid-area: toggle;
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 48rem) {
   .site-header {
     font-size: 15px;
   }
@@ -358,13 +362,12 @@ td a {
 }
 
 .meta {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   color: var(--mut);
   font-size: 15px;
 }
 
 .pts {
-  margin-bottom: 14px;
   list-style: none;
 }
 
@@ -461,7 +464,7 @@ figcaption {
 }
 
 .ill-cols {
-  color: var(--mut);
+  color: var(--fg);
   font-weight: 600;
 }
 
@@ -509,7 +512,7 @@ figcaption {
   border-bottom: 1px solid var(--line);
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 48rem) {
   .row {
     grid-template-columns: 210px 1fr;
   }

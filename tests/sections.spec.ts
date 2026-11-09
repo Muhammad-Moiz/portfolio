@@ -72,3 +72,11 @@ test("decorative cursor and prompts are hidden from assistive tech", async ({ pa
     await expect(el).toHaveAttribute("aria-hidden", "true");
   }
 });
+
+test("section prompt is spaced from the title and stays out of the name", async ({ page }) => {
+  await page.goto("/");
+  const heading = page.locator("#work-title");
+  const visible = await heading.evaluate((el) => (el as HTMLElement).innerText.replace(/\s+/g, " ").trim());
+  expect(visible).toBe(String.raw`C:\> DIR Projects`);
+  await expect(heading).toHaveAccessibleName("Projects");
+});
