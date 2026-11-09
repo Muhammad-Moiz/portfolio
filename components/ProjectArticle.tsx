@@ -6,7 +6,7 @@ const pairSizes = "(min-width: 900px) 540px, 100vw";
 const singleSizes = "(min-width: 1260px) 1100px, 100vw";
 
 export function ProjectArticle({ project }: { project: Project }) {
-  const { id, title, meta, intro, bullets, stack, label, figures, illustration } = project;
+  const { id, title, meta, intro, bullets, stack, label, figures } = project;
   const titleId = `${id}-title`;
   const paired = figures.length > 1;
 
@@ -32,21 +32,23 @@ export function ProjectArticle({ project }: { project: Project }) {
           <b>Stack:</b> {stack.join(" · ")}
         </p>
       </div>
-      {illustration && <PaymentsIllustration />}
-      <div className={paired ? "figs" : undefined}>
-        {figures.map(({ src, width, height, alt, caption }) => (
-          <figure key={src}>
-            <Image
-              src={src}
-              width={width}
-              height={height}
-              alt={alt}
-              sizes={paired ? pairSizes : singleSizes}
-            />
-            <figcaption>{caption}</figcaption>
-          </figure>
-        ))}
-      </div>
+      {label === "illustration" && <PaymentsIllustration />}
+      {figures.length > 0 && (
+        <div className={paired ? "figs" : undefined}>
+          {figures.map(({ src, width, height, alt, caption }) => (
+            <figure key={src}>
+              <Image
+                src={src}
+                width={width}
+                height={height}
+                alt={alt}
+                sizes={paired ? pairSizes : singleSizes}
+              />
+              <figcaption>{caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
     </article>
   );
 }

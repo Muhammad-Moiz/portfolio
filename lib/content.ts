@@ -10,9 +10,8 @@ export type Project = {
   intro: string;
   bullets: string[];
   stack: string[];
-  label?: string;
+  label?: "illustration";
   figures: Figure[];
-  illustration?: boolean;
 };
 export type SmallProject = {
   id: string;
@@ -160,7 +159,6 @@ export const projects: Project[] = [
     stack: ["Java", "Spring Boot", "Kafka"],
     label: "illustration",
     figures: [],
-    illustration: true,
   },
   {
     id: "foxtons",

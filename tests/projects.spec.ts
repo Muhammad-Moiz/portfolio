@@ -52,6 +52,7 @@ test("illustration is one labelled image", async ({ page }) => {
   await expect(illustration).toHaveCount(1);
   await expect(illustration).toHaveAttribute("aria-label", /Sample data/);
   await expect(page.getByText("An illustration with made-up data. The real system is confidential.")).toBeVisible();
+  await expect(page.locator(".proj > div:empty")).toHaveCount(0);
 });
 
 test("project headings read as their titles", async ({ page }) => {
