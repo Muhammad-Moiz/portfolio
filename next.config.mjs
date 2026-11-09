@@ -6,9 +6,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // This project lives inside the home directory, which has its own lockfile.
-  // Pin the tracing root so Next.js does not walk up and pick the wrong one.
+  // Pin the tracing root to this project so a lockfile in a parent directory isn't used.
   outputFileTracingRoot: __dirname,
+  images: { formats: ["image/avif", "image/webp"] },
   async headers() {
     return [
       {

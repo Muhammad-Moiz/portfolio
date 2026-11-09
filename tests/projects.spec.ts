@@ -46,6 +46,14 @@ test("images reserve space", async ({ page }) => {
   }
 });
 
+test("images are served as AVIF when the browser accepts it", async ({ request }) => {
+  const response = await request.get("/_next/image?url=%2Fwork%2Ffoxtons.jpg&w=640&q=75", {
+    headers: { accept: "image/avif,image/webp,*/*" },
+  });
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toBe("image/avif");
+});
+
 test("illustration is one labelled image", async ({ page }) => {
   await page.goto("/");
   const illustration = page.getByRole("img", { name: /salary run summary/ });
