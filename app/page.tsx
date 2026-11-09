@@ -1,10 +1,16 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Intro } from "@/components/Intro";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export default function Home() {
   return (
-    <main id="main">
-      <ThemeToggle />
-      <h1>Muhammad Moiz</h1>
-    </main>
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main id="main" tabIndex={-1} className="wrap">
+        <Intro />
+      </main>
+    </>
   );
 }
