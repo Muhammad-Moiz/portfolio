@@ -39,6 +39,15 @@ test("intro actions are links of at least 44px", async ({ page }) => {
   }
 });
 
+test("CV links download the PDF under a readable name", async ({ page }) => {
+  await page.goto("/");
+  const links = page.getByRole("link", { name: "Download CV (PDF)" });
+  await expect(links).toHaveCount(2);
+  for (const link of await links.all()) {
+    await expect(link).toHaveAttribute("download", "Muhammad-Moiz-CV.pdf");
+  }
+});
+
 for (const width of [1280, 390]) {
   test(`logo link returns to the top at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 800 });

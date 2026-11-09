@@ -1,4 +1,4 @@
-export type Link = { label: string; href: string; accessibleName?: string };
+export type Link = { label: string; href: string; accessibleName?: string; download?: string };
 export type Figure = { src: string; width: number; height: number; alt: string; caption: string };
 export type Project = {
   id: string;
@@ -58,7 +58,12 @@ export const profile = {
   gitHub: "https://github.com/Muhammad-Moiz",
 };
 
-const cv: Link = { label: "Download CV", accessibleName: "Download CV (PDF)", href: "/cv.pdf" };
+const cv: Link = {
+  label: "Download CV",
+  accessibleName: "Download CV (PDF)",
+  href: "/cv.pdf",
+  download: "Muhammad-Moiz-CV.pdf",
+};
 const mailto = `mailto:${profile.email}`;
 const socialLinks: Link[] = [
   { label: "LinkedIn", href: profile.linkedIn },
