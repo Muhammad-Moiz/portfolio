@@ -18,15 +18,36 @@ test("light when OS prefers light", async ({ page }) => {
   expect(await bg(page)).toBe(LIGHT_BG);
 });
 
-test("toggle switches, persists and relabels", async ({ page }) => {
+test("toggle works from the keyboard, persists and relabels", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");
-  await page.getByRole("button", { name: "Switch to light mode" }).click();
+  await page.getByRole("button", { name: "Switch to light mode" }).focus();
+  await page.keyboard.press("Enter");
   expect(await bg(page)).toBe(LIGHT_BG);
-  await expect(page.getByRole("button", { name: "Switch to dark mode" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Switch to dark mode" })).toBeFocused();
   await page.reload();
   expect(await bg(page)).toBe(LIGHT_BG);
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+});
+
+test("toggle name follows an OS scheme change after load", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+  const toggle = page.locator(".theme-toggle");
+  await expect(toggle).toHaveAccessibleName("Switch to light mode", { ignoreCase: true });
+
+  await page.emulateMedia({ colorScheme: "light" });
+  await expect(toggle).toHaveAccessibleName("Switch to dark mode", { ignoreCase: true });
+  const visibleLabel = await toggle.evaluate((button) => {
+    const walker = document.createTreeWalker(button, NodeFilter.SHOW_TEXT);
+    let text = "";
+    while (walker.nextNode()) {
+      const parent = walker.currentNode.parentElement!;
+      if (parent.checkVisibility() && !parent.closest(".sr-only")) text += walker.currentNode.textContent;
+    }
+    return text.trim();
+  });
+  expect(visibleLabel).toBe("☾ Dark");
 });
 
 test("stored theme applies before hydration", async ({ page }) => {
