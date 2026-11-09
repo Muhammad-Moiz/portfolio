@@ -1,0 +1,21 @@
+import type { SmallProject } from "@/lib/content";
+
+export function SmallProjects({ items }: { items: SmallProject[] }) {
+  return (
+    <div className="two">
+      {items.map(({ title, meta, body, stack }) => {
+        const id = title.toLowerCase().replace(/\s+/g, "-");
+        return (
+          <article key={id} id={id} aria-labelledby={`${id}-title`} className="box">
+            <h3 id={`${id}-title`}>{title}</h3>
+            <p className="meta">{meta}</p>
+            <p>{body}</p>
+            <p className="stack">
+              <b>Stack:</b> {stack.join(" · ")}
+            </p>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
